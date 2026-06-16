@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
+  static const neutral00 = Color(0xFFFFFFFF);
   static const neutral25 = Color(0xFFF6F6F7);
   static const neutral50 = Color(0xFFEFEFF0);
   static const neutral100 = Color(0xFFE2E3E4);
@@ -12,6 +13,7 @@ abstract final class AppColors {
   static const neutral700 = Color(0xFF66666E);
   static const neutral800 = Color(0xFF55565A);
   static const neutral900 = Color(0xFF323234);
+  static const neutral1000 = Color(0xFF000000);
 
   static const brand25 = Color(0xFFF7F4FE);
   static const brand50 = Color(0xFFEFEBFC);
@@ -61,10 +63,12 @@ abstract final class AppColors {
   static const success800 = Color(0xFF094B35);
   static const success900 = Color(0xFF042A1E);
 
+  static const offWhite = Color(0xFFFAF6FF);
   static const lightening = Color(0xFFEEE0FE);
+  static const midnightBlack = Color(0xFF0D0915);
 
   static const canvas = neutral25;
-  static const surface = Color(0xFFFFFFFF);
+  static const surface = neutral00;
   static const surfaceMuted = neutral50;
   static const textPrimary = neutral900;
   static const textSecondary = neutral600;
@@ -119,85 +123,91 @@ const appColorGroups = [
   AppColorGroup(
     name: 'Neutral',
     tokens: [
-      AppColorToken(name: 'neutral_25', value: AppColors.neutral25),
-      AppColorToken(name: 'neutral_50', value: AppColors.neutral50),
-      AppColorToken(name: 'neutral_100', value: AppColors.neutral100),
-      AppColorToken(name: 'neutral_200', value: AppColors.neutral200),
-      AppColorToken(name: 'neutral_300', value: AppColors.neutral300),
-      AppColorToken(name: 'neutral_400', value: AppColors.neutral400),
-      AppColorToken(name: 'neutral_500', value: AppColors.neutral500),
-      AppColorToken(name: 'neutral_600', value: AppColors.neutral600),
-      AppColorToken(name: 'neutral_700', value: AppColors.neutral700),
-      AppColorToken(name: 'neutral_800', value: AppColors.neutral800),
-      AppColorToken(name: 'neutral_900', value: AppColors.neutral900),
+      AppColorToken(name: '0', value: AppColors.neutral00),
+      AppColorToken(name: '25', value: AppColors.neutral25),
+      AppColorToken(name: '50', value: AppColors.neutral50),
+      AppColorToken(name: '100', value: AppColors.neutral100),
+      AppColorToken(name: '200', value: AppColors.neutral200),
+      AppColorToken(name: '300', value: AppColors.neutral300),
+      AppColorToken(name: '400', value: AppColors.neutral400),
+      AppColorToken(name: '500', value: AppColors.neutral500),
+      AppColorToken(name: '600', value: AppColors.neutral600),
+      AppColorToken(name: '700', value: AppColors.neutral700),
+      AppColorToken(name: '800', value: AppColors.neutral800),
+      AppColorToken(name: '900', value: AppColors.neutral900),
+      AppColorToken(name: '1000', value: AppColors.neutral1000),
     ],
   ),
   AppColorGroup(
     name: 'Brand',
     tokens: [
-      AppColorToken(name: 'brand_25', value: AppColors.brand25),
-      AppColorToken(name: 'brand_50', value: AppColors.brand50),
-      AppColorToken(name: 'brand_100', value: AppColors.brand100),
-      AppColorToken(name: 'brand_200', value: AppColors.brand200),
-      AppColorToken(name: 'brand_300', value: AppColors.brand300),
-      AppColorToken(name: 'brand_400', value: AppColors.brand400),
-      AppColorToken(name: 'brand_500', value: AppColors.brand500),
-      AppColorToken(name: 'brand_600', value: AppColors.brand600),
-      AppColorToken(name: 'brand_700', value: AppColors.brand700),
-      AppColorToken(name: 'brand_800', value: AppColors.brand800),
-      AppColorToken(name: 'brand_900', value: AppColors.brand900),
+      AppColorToken(name: '25', value: AppColors.brand25),
+      AppColorToken(name: '50', value: AppColors.brand50),
+      AppColorToken(name: '100', value: AppColors.brand100),
+      AppColorToken(name: '200', value: AppColors.brand200),
+      AppColorToken(name: '300', value: AppColors.brand300),
+      AppColorToken(name: '400', value: AppColors.brand400),
+      AppColorToken(name: '500', value: AppColors.brand500),
+      AppColorToken(name: '600', value: AppColors.brand600),
+      AppColorToken(name: '700', value: AppColors.brand700),
+      AppColorToken(name: '800', value: AppColors.brand800),
+      AppColorToken(name: '900', value: AppColors.brand900),
     ],
   ),
   AppColorGroup(
     name: 'Error',
     tokens: [
-      AppColorToken(name: 'error_25', value: AppColors.error25),
-      AppColorToken(name: 'error_50', value: AppColors.error50),
-      AppColorToken(name: 'error_100', value: AppColors.error100),
-      AppColorToken(name: 'error_200', value: AppColors.error200),
-      AppColorToken(name: 'error_300', value: AppColors.error300),
-      AppColorToken(name: 'error_400', value: AppColors.error400),
-      AppColorToken(name: 'error_500', value: AppColors.error500),
-      AppColorToken(name: 'error_600', value: AppColors.error600),
-      AppColorToken(name: 'error_700', value: AppColors.error700),
-      AppColorToken(name: 'error_800', value: AppColors.error800),
-      AppColorToken(name: 'error_900', value: AppColors.error900),
+      AppColorToken(name: '25', value: AppColors.error25),
+      AppColorToken(name: '50', value: AppColors.error50),
+      AppColorToken(name: '100', value: AppColors.error100),
+      AppColorToken(name: '200', value: AppColors.error200),
+      AppColorToken(name: '300', value: AppColors.error300),
+      AppColorToken(name: '400', value: AppColors.error400),
+      AppColorToken(name: '500', value: AppColors.error500),
+      AppColorToken(name: '600', value: AppColors.error600),
+      AppColorToken(name: '700', value: AppColors.error700),
+      AppColorToken(name: '800', value: AppColors.error800),
+      AppColorToken(name: '900', value: AppColors.error900),
     ],
   ),
   AppColorGroup(
     name: 'Warning',
     tokens: [
-      AppColorToken(name: 'warning_25', value: AppColors.warning25),
-      AppColorToken(name: 'warning_50', value: AppColors.warning50),
-      AppColorToken(name: 'warning_100', value: AppColors.warning100),
-      AppColorToken(name: 'warning_200', value: AppColors.warning200),
-      AppColorToken(name: 'warning_300', value: AppColors.warning300),
-      AppColorToken(name: 'warning_400', value: AppColors.warning400),
-      AppColorToken(name: 'warning_500', value: AppColors.warning500),
-      AppColorToken(name: 'warning_600', value: AppColors.warning600),
-      AppColorToken(name: 'warning_700', value: AppColors.warning700),
-      AppColorToken(name: 'warning_800', value: AppColors.warning800),
-      AppColorToken(name: 'warning_900', value: AppColors.warning900),
+      AppColorToken(name: '25', value: AppColors.warning25),
+      AppColorToken(name: '50', value: AppColors.warning50),
+      AppColorToken(name: '100', value: AppColors.warning100),
+      AppColorToken(name: '200', value: AppColors.warning200),
+      AppColorToken(name: '300', value: AppColors.warning300),
+      AppColorToken(name: '400', value: AppColors.warning400),
+      AppColorToken(name: '500', value: AppColors.warning500),
+      AppColorToken(name: '600', value: AppColors.warning600),
+      AppColorToken(name: '700', value: AppColors.warning700),
+      AppColorToken(name: '800', value: AppColors.warning800),
+      AppColorToken(name: '900', value: AppColors.warning900),
     ],
   ),
   AppColorGroup(
     name: 'Success',
     tokens: [
-      AppColorToken(name: 'success_25', value: AppColors.success25),
-      AppColorToken(name: 'success_50', value: AppColors.success50),
-      AppColorToken(name: 'success_100', value: AppColors.success100),
-      AppColorToken(name: 'success_200', value: AppColors.success200),
-      AppColorToken(name: 'success_300', value: AppColors.success300),
-      AppColorToken(name: 'success_400', value: AppColors.success400),
-      AppColorToken(name: 'success_500', value: AppColors.success500),
-      AppColorToken(name: 'success_600', value: AppColors.success600),
-      AppColorToken(name: 'success_700', value: AppColors.success700),
-      AppColorToken(name: 'success_800', value: AppColors.success800),
-      AppColorToken(name: 'success_900', value: AppColors.success900),
+      AppColorToken(name: '25', value: AppColors.success25),
+      AppColorToken(name: '50', value: AppColors.success50),
+      AppColorToken(name: '100', value: AppColors.success100),
+      AppColorToken(name: '200', value: AppColors.success200),
+      AppColorToken(name: '300', value: AppColors.success300),
+      AppColorToken(name: '400', value: AppColors.success400),
+      AppColorToken(name: '500', value: AppColors.success500),
+      AppColorToken(name: '600', value: AppColors.success600),
+      AppColorToken(name: '700', value: AppColors.success700),
+      AppColorToken(name: '800', value: AppColors.success800),
+      AppColorToken(name: '900', value: AppColors.success900),
     ],
   ),
   AppColorGroup(
-    name: 'Special',
-    tokens: [AppColorToken(name: 'lightening', value: AppColors.lightening)],
+    name: 'Special Colors',
+    tokens: [
+      AppColorToken(name: 'off-white', value: AppColors.offWhite),
+      AppColorToken(name: 'lightening', value: AppColors.lightening),
+      AppColorToken(name: 'midnight-black', value: AppColors.midnightBlack),
+    ],
   ),
 ];

@@ -26,7 +26,7 @@ class ColorPalettePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Supernova foundation palette grouped by role and scale.',
+                  'Dashboard foundation palette grouped by role and scale.',
                   style: AppTypeScaleToken.textMd
                       .style(AppTypeWeight.regular)
                       .copyWith(color: AppColors.textSecondary),
@@ -71,7 +71,7 @@ class _ColorGroupSection extends StatelessWidget {
             LayoutBuilder(
               builder: (context, constraints) {
                 final columns = constraints.maxWidth >= 960
-                    ? 6
+                    ? 5
                     : constraints.maxWidth >= 720
                     ? 4
                     : constraints.maxWidth >= 480
@@ -85,7 +85,7 @@ class _ColorGroupSection extends StatelessWidget {
                     crossAxisCount: columns,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 0.9,
+                    childAspectRatio: 0.86,
                   ),
                   itemCount: group.tokens.length,
                   itemBuilder: (context, index) {
@@ -122,8 +122,8 @@ class _ColorTokenCard extends StatelessWidget {
             Expanded(
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: token.value,
-                  border: Border(
+                color: token.value,
+                border: Border(
                     bottom: BorderSide(
                       color: _needsStroke
                           ? AppColors.border
@@ -164,8 +164,10 @@ class _ColorTokenCard extends StatelessWidget {
 
   bool get _needsStroke {
     return token.value == AppColors.surface ||
+        token.value == AppColors.neutral00 ||
         token.value == AppColors.neutral25 ||
         token.value == AppColors.neutral50 ||
+        token.value == AppColors.offWhite ||
         token.value == AppColors.brand25 ||
         token.value == AppColors.error25 ||
         token.value == AppColors.warning25 ||
