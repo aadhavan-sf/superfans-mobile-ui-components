@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import '../../foundation/app_colors.dart';
+import '../../foundation/app_radius.dart';
 import '../../foundation/app_shadows.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_typography.dart';
@@ -54,7 +55,7 @@ class SfButton extends StatelessWidget {
     required this.label,
     this.variant = SfButtonVariant.primary,
     this.state = SfButtonState.enabled,
-    this.size = SfButtonSize.medium,
+    this.size = SfButtonSize.small,
     this.icon = SfButtonIcon.none,
     this.destructive = false,
     this.onPressed,
@@ -67,8 +68,6 @@ class SfButton extends StatelessWidget {
   final SfButtonIcon icon;
   final bool destructive;
   final VoidCallback? onPressed;
-
-  static const radius = 12.0;
 
   bool get _isDisabled => state == SfButtonState.disabled;
   bool get _isIconOnly => icon == SfButtonIcon.only;
@@ -86,6 +85,7 @@ class SfButton extends StatelessWidget {
     );
     final isLink = variant == SfButtonVariant.linkGrey;
     final metrics = _SfButtonMetrics.resolve(size: size, isLink: isLink);
+    final radius = BorderRadius.circular(metrics.radius);
 
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -95,13 +95,13 @@ class SfButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(radius),
+          borderRadius: radius,
           onTap: _isDisabled ? null : onPressed,
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: colors.background,
               border: Border.all(color: colors.border),
-              borderRadius: BorderRadius.circular(radius),
+              borderRadius: radius,
               boxShadow: colors.shadow,
             ),
             child: Padding(
@@ -186,12 +186,14 @@ class _SfButtonMetrics {
     required this.paddingX,
     required this.paddingY,
     required this.iconPadding,
+    required this.radius,
     required this.textStyle,
   });
 
   final double paddingX;
   final double paddingY;
   final double iconPadding;
+  final double radius;
   final TextStyle Function(Color color) textStyle;
 
   double get iconOnlySize => 20 + (iconPadding * 2);
@@ -205,6 +207,7 @@ class _SfButtonMetrics {
         paddingX: 0,
         paddingY: 0,
         iconPadding: 0,
+        radius: AppRadius.radius3,
         textStyle: (color) => AppTypography.textSm.semibold(color: color),
       );
     }
@@ -214,30 +217,35 @@ class _SfButtonMetrics {
         paddingX: 14,
         paddingY: AppSpacing.spacing2,
         iconPadding: AppSpacing.spacing2,
+        radius: AppRadius.radius3,
         textStyle: (color) => AppTypography.textSm.semibold(color: color),
       ),
       SfButtonSize.medium => _SfButtonMetrics(
         paddingX: AppSpacing.spacing4,
         paddingY: 10,
         iconPadding: 10,
+        radius: AppRadius.radius3,
         textStyle: (color) => AppTypography.textSm.semibold(color: color),
       ),
       SfButtonSize.large => _SfButtonMetrics(
         paddingX: 18,
         paddingY: 10,
         iconPadding: 10,
+        radius: AppRadius.radius4,
         textStyle: (color) => AppTypography.textMd.semibold(color: color),
       ),
       SfButtonSize.xlarge => _SfButtonMetrics(
         paddingX: AppSpacing.spacing5,
         paddingY: AppSpacing.spacing3,
         iconPadding: 10,
+        radius: AppRadius.radius4,
         textStyle: (color) => AppTypography.textMd.semibold(color: color),
       ),
       SfButtonSize.xxlarge => _SfButtonMetrics(
         paddingX: AppSpacing.spacing6,
         paddingY: 14,
         iconPadding: 14,
+        radius: AppRadius.radius4,
         textStyle: (color) => AppTypography.textMd.semibold(color: color),
       ),
     };

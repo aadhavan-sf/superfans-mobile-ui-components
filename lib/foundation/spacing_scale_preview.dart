@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'app_radius.dart';
 import 'app_shadows.dart';
 import 'app_spacing.dart';
 import 'type_scale_preview.dart';
@@ -40,10 +41,24 @@ class SpacingScalePage extends StatelessWidget {
                                 .style(AppTypeWeight.semibold)
                                 .copyWith(fontSize: 32, height: 1.25),
                           ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'The same values power spacing layout and border radius.',
+                            style: AppTypeScaleToken.textMd
+                                .style(AppTypeWeight.regular)
+                                .copyWith(color: AppColors.textSecondary),
+                          ),
                         ],
                       ),
                     ),
-                    _CodeLabel('AppSpacing.*'),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: const [
+                        _CodeLabel('AppSpacing.*'),
+                        SizedBox(height: 8),
+                        _CodeLabel('AppRadius.*'),
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -62,12 +77,12 @@ class SpacingScalePage extends StatelessWidget {
                         _SpacingExampleCard(
                           gap: AppSpacing.spacing2,
                           padding: AppSpacing.spacing3,
-                          labels: ['gap 2', 'padding 3', 'space 4'],
+                          labels: ['gap 2', 'padding 3', 'radius 3'],
                         ),
                         _SpacingExampleCard(
                           gap: AppSpacing.spacing4,
                           padding: AppSpacing.spacing6,
-                          labels: ['gap 4', 'padding 6', 'space 8'],
+                          labels: ['gap 4', 'padding 6', 'radius 4'],
                         ),
                       ],
                     );
@@ -207,8 +222,19 @@ class _SpacingLabel extends StatelessWidget {
 
   final AppSpacingToken token;
 
+  AppRadiusToken? get _radiusToken {
+    for (final radiusToken in appRadiusTokens) {
+      if (radiusToken.name == token.name) {
+        return radiusToken;
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final radiusToken = _radiusToken;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -218,6 +244,10 @@ class _SpacingLabel extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         _CodeLabel(token.cssVariable),
+        if (radiusToken != null) ...[
+          const SizedBox(height: 4),
+          _CodeLabel(radiusToken.codeName),
+        ],
       ],
     );
   }
