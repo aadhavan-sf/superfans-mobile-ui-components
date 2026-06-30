@@ -36,7 +36,7 @@ jobs:
         run: flutter analyze
 
       - name: Build Widgetbook for GitHub Pages
-        run: flutter build web --base-href /superfans-mobile-ui-components/
+        run: flutter build web --base-href /superfans-mobile-ui-components/ --no-tree-shake-icons
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
