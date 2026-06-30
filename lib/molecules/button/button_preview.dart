@@ -26,14 +26,6 @@ class ButtonPlaygroundPage extends StatelessWidget {
     return MoleculePlaygroundScaffold(
       title: 'Button',
       subtitle: '${variant.label} / ${state.label}',
-      specs: [
-        'Variant: ${variant.label}',
-        'State: ${state.label}',
-        'Size: ${size.label}',
-        'Icon: ${icon.label}',
-        'Destructive: $destructive',
-        'Label: $label',
-      ],
       child: SfButton(
         label: label,
         variant: variant,

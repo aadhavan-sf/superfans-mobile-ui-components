@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../foundation/app_colors.dart';
 import '../foundation/app_spacing.dart';
 import '../foundation/type_scale_preview.dart';
-import 'preview_specs.dart';
-import 'preview_zoom.dart';
 
 class MoleculePlaygroundScaffold extends StatelessWidget {
   const MoleculePlaygroundScaffold({
@@ -12,14 +10,12 @@ class MoleculePlaygroundScaffold extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.child,
-    this.specs = const [],
     this.footer,
   });
 
   final String title;
   final String subtitle;
   final Widget child;
-  final List<String> specs;
   final Widget? footer;
 
   @override
@@ -47,14 +43,8 @@ class MoleculePlaygroundScaffold extends StatelessWidget {
                     color: AppColors.neutral600,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.spacing4),
-                const PreviewHelpBanner(),
-                if (specs.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.spacing4),
-                  PreviewSpecPanel(items: specs),
-                ],
                 const SizedBox(height: AppSpacing.spacing10),
-                PreviewZoomSurface(child: child),
+                Align(alignment: Alignment.center, child: child),
                 if (footer != null) ...[
                   const SizedBox(height: AppSpacing.spacing6),
                   Align(alignment: Alignment.center, child: footer!),
@@ -102,8 +92,6 @@ class MoleculeVariantsScaffold extends StatelessWidget {
                     color: AppColors.neutral600,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.spacing4),
-                const PreviewHelpBanner(),
                 const SizedBox(height: AppSpacing.spacing8),
                 ...sections,
               ],
@@ -152,10 +140,7 @@ class MoleculeSection extends StatelessWidget {
             ),
           ],
           const SizedBox(height: AppSpacing.spacing4),
-          Align(
-            alignment: Alignment.center,
-            child: PreviewZoomSurface(initialScale: 2.5, child: child),
-          ),
+          Align(alignment: Alignment.center, child: child),
         ],
       ),
     );

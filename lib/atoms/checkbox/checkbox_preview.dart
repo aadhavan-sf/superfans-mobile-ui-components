@@ -42,11 +42,6 @@ class _CheckBoxPlaygroundPageState extends State<CheckBoxPlaygroundPage> {
     return AtomPlaygroundScaffold(
       title: 'Check box',
       subtitle: '${widget.size.label} / ${widget.state.label}',
-      specs: [
-        'State: ${widget.state.label}',
-        'Size: ${widget.size.label}',
-        'Value: ${_value.name}',
-      ],
       child: SfCheckBox(
         value: _value,
         onChanged: widget.state.isDisabled

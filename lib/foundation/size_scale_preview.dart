@@ -6,8 +6,8 @@ import 'app_shadows.dart';
 import 'app_spacing.dart';
 import 'type_scale_preview.dart';
 
-class SpacingScalePage extends StatelessWidget {
-  const SpacingScalePage({super.key});
+class SizeScalePage extends StatelessWidget {
+  const SizeScalePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +29,21 @@ class SpacingScalePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Spacing',
+                            'Size scale',
                             style: AppTypeScaleToken.textSm
                                 .style(AppTypeWeight.semibold)
                                 .copyWith(color: AppColors.brand600),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '4px-based layout scale',
+                            '4px-based size scale',
                             style: AppTypeScaleToken.textXxl
                                 .style(AppTypeWeight.semibold)
                                 .copyWith(fontSize: 32, height: 1.25),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'The same values power spacing layout and border radius.',
+                            'The same values power layout sizing and border radius.',
                             style: AppTypeScaleToken.textMd
                                 .style(AppTypeWeight.regular)
                                 .copyWith(color: AppColors.textSecondary),
@@ -74,12 +74,12 @@ class SpacingScalePage extends StatelessWidget {
                       mainAxisSpacing: 16,
                       childAspectRatio: isWide ? 2.6 : 2.2,
                       children: const [
-                        _SpacingExampleCard(
+                        _SizeScaleExampleCard(
                           gap: AppSpacing.spacing2,
                           padding: AppSpacing.spacing3,
                           labels: ['gap 2', 'padding 3', 'radius 3'],
                         ),
-                        _SpacingExampleCard(
+                        _SizeScaleExampleCard(
                           gap: AppSpacing.spacing4,
                           padding: AppSpacing.spacing6,
                           labels: ['gap 4', 'padding 6', 'radius 4'],
@@ -93,7 +93,7 @@ class SpacingScalePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     for (final token in appSpacingTokens) ...[
-                      _SpacingRow(token: token),
+                      _SizeScaleRow(token: token),
                       if (token != appSpacingTokens.last)
                         const SizedBox(height: 8),
                     ],
@@ -108,8 +108,8 @@ class SpacingScalePage extends StatelessWidget {
   }
 }
 
-class _SpacingExampleCard extends StatelessWidget {
-  const _SpacingExampleCard({
+class _SizeScaleExampleCard extends StatelessWidget {
+  const _SizeScaleExampleCard({
     required this.gap,
     required this.padding,
     required this.labels,
@@ -125,7 +125,7 @@ class _SpacingExampleCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceMuted,
         border: Border.all(color: AppColors.border),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.radius2),
       ),
       child: Padding(
         padding: EdgeInsets.all(padding),
@@ -137,12 +137,12 @@ class _SpacingExampleCard extends StatelessWidget {
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(AppRadius.radius2),
                   boxShadow: AppShadows.xs,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
+                    horizontal: AppSpacing.spacing3,
                     vertical: 10,
                   ),
                   child: Text(
@@ -161,8 +161,8 @@ class _SpacingExampleCard extends StatelessWidget {
   }
 }
 
-class _SpacingRow extends StatelessWidget {
-  const _SpacingRow({required this.token});
+class _SizeScaleRow extends StatelessWidget {
+  const _SizeScaleRow({required this.token});
 
   final AppSpacingToken token;
 
@@ -172,15 +172,18 @@ class _SpacingRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         border: Border.all(color: AppColors.border),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.radius2),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.spacing3,
+          vertical: 10,
+        ),
         child: LayoutBuilder(
           builder: (context, constraints) {
             final isNarrow = constraints.maxWidth < 620;
-            final label = _SpacingLabel(token: token);
-            final bar = _SpacingBar(token: token);
+            final label = _SizeScaleLabel(token: token);
+            final bar = _SizeScaleBar(token: token);
             final value = Text(
               token.px,
               textAlign: isNarrow ? TextAlign.left : TextAlign.right,
@@ -194,9 +197,9 @@ class _SpacingRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   label,
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.spacing2),
                   bar,
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.spacing2),
                   value,
                 ],
               );
@@ -206,7 +209,7 @@ class _SpacingRow extends StatelessWidget {
               children: [
                 SizedBox(width: 220, child: label),
                 Expanded(child: bar),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppSpacing.spacing4),
                 SizedBox(width: 64, child: value),
               ],
             );
@@ -217,8 +220,8 @@ class _SpacingRow extends StatelessWidget {
   }
 }
 
-class _SpacingLabel extends StatelessWidget {
-  const _SpacingLabel({required this.token});
+class _SizeScaleLabel extends StatelessWidget {
+  const _SizeScaleLabel({required this.token});
 
   final AppSpacingToken token;
 
@@ -253,8 +256,8 @@ class _SpacingLabel extends StatelessWidget {
   }
 }
 
-class _SpacingBar extends StatelessWidget {
-  const _SpacingBar({required this.token});
+class _SizeScaleBar extends StatelessWidget {
+  const _SizeScaleBar({required this.token});
 
   final AppSpacingToken token;
 
@@ -263,12 +266,12 @@ class _SpacingBar extends StatelessWidget {
     final width = token.value == 0 ? 1.0 : token.value;
 
     return SizedBox(
-      height: 24,
+      height: AppSpacing.spacing6,
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
           width: width,
-          height: 16,
+          height: AppSpacing.spacing4,
           decoration: BoxDecoration(
             color: AppColors.brand500,
             borderRadius: BorderRadius.circular(999),

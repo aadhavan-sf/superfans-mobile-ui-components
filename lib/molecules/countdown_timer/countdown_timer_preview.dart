@@ -1,150 +1,102 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_colors.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/type_scale_preview.dart';
 import '../../preview/molecule_preview.dart';
 import 'sf_countdown_timer.dart';
 
-class CountdownTimerPlaygroundPage extends StatefulWidget {
+class CountdownTimerPlaygroundPage extends StatelessWidget {
   const CountdownTimerPlaygroundPage({
     super.key,
     required this.days,
     required this.hours,
     required this.minutes,
     required this.seconds,
-    required this.showDays,
+    required this.running,
   });
 
   final int days;
   final int hours;
   final int minutes;
   final int seconds;
-  final bool showDays;
-
-  @override
-  State<CountdownTimerPlaygroundPage> createState() =>
-      _CountdownTimerPlaygroundPageState();
-}
-
-class _CountdownTimerPlaygroundPageState
-    extends State<CountdownTimerPlaygroundPage> {
-  late DateTime _target;
-  int _restartToken = 0;
-  bool _completed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _target = _buildTarget();
-  }
-
-  @override
-  void didUpdateWidget(CountdownTimerPlaygroundPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.days != oldWidget.days ||
-        widget.hours != oldWidget.hours ||
-        widget.minutes != oldWidget.minutes ||
-        widget.seconds != oldWidget.seconds) {
-      setState(() {
-        _target = _buildTarget();
-        _completed = false;
-        _restartToken++;
-      });
-    }
-  }
-
-  DateTime _buildTarget() {
-    return DateTime.now().add(
-      Duration(
-        days: widget.days,
-        hours: widget.hours,
-        minutes: widget.minutes,
-        seconds: widget.seconds,
-      ),
-    );
-  }
-
-  void _restart() {
-    setState(() {
-      _target = _buildTarget();
-      _completed = false;
-      _restartToken++;
-    });
-  }
+  final bool running;
 
   @override
   Widget build(BuildContext context) {
     return MoleculePlaygroundScaffold(
       title: 'Countdown timer',
-      subtitle: widget.showDays ? 'With days' : 'Hours, mins, secs only',
-      specs: [
-        'Days: ${widget.days}',
-        'Hours: ${widget.hours}',
-        'Minutes: ${widget.minutes}',
-        'Seconds: ${widget.seconds}',
-        'Show days: ${widget.showDays}',
-        'Target: ${_target.toIso8601String()}',
-      ],
-      footer: Column(
-        children: [
-          if (_completed)
-            Text(
-              'Countdown complete',
-              style: AppTypeScaleToken.textSm.style(
-                AppTypeWeight.semibold,
-                color: AppColors.brand600,
-              ),
-            ),
-          TextButton(onPressed: _restart, child: const Text('Restart')),
-        ],
+      subtitle: running ? 'Live countdown' : 'Static preview',
+      footer: Text(
+        running
+            ? 'Counting down from ${_formatSummary()}'
+            : 'Running is off — showing static values',
+        style: AppTypeScaleToken.textSm.style(
+          AppTypeWeight.regular,
+          color: AppColors.neutral600,
+        ),
       ),
       child: SfCountdownTimer(
-        key: ValueKey(_restartToken),
-        target: _target,
-        showDays: widget.showDays,
-        onComplete: () => setState(() => _completed = true),
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        running: running,
       ),
     );
   }
+
+  String _formatSummary() {
+    return '${days}d ${hours}h ${minutes}m ${seconds}s';
+  }
 }
 
-class CountdownTimerVariantsPage extends StatelessWidget {
+class CountdownTimerVariantsPage extends StatefulWidget {
   const CountdownTimerVariantsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final sampleTarget = DateTime.now().add(
-      const Duration(days: 2, hours: 10, minutes: 45, seconds: 5),
-    );
-    final shortTarget = DateTime.now().add(
-      const Duration(hours: 1, minutes: 30, seconds: 15),
-    );
+  State<CountdownTimerVariantsPage> createState() =>
+      _CountdownTimerVariantsPageState();
+}
 
+class _CountdownTimerVariantsPageState extends State<CountdownTimerVariantsPage> {
+  late final DateTime _liveTarget;
+
+  @override
+  void initState() {
+    super.initState();
+    _liveTarget = DateTime.now().add(const Duration(seconds: 90));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MoleculeVariantsScaffold(
       title: 'Countdown timer',
       sections: [
         MoleculeSection(
-          title: 'Live countdown',
-          subtitle: 'Counts down every second until zero.',
-          child: SfCountdownTimer(target: sampleTarget),
-        ),
-        MoleculeSection(
-          title: 'Static display',
-          subtitle: 'Fixed values for layout reference.',
-          child: const SfCountdownTimerDisplay(
-            duration: SfCountdownDuration(
-              days: 2,
-              hours: 10,
-              minutes: 45,
-              seconds: 5,
-            ),
+          title: 'Figma default',
+          subtitle: 'Default Figma variant — 2d 10h 45m 05s.',
+          child: const SfCountdownTimer(
+            state: SfCountdownTimerState.defaultState,
+            running: false,
           ),
         ),
         MoleculeSection(
-          title: 'Without days',
-          child: SfCountdownTimer(
-            target: shortTarget,
-            showDays: false,
+          title: 'Live countdown',
+          subtitle: 'Counts down live to a target 90 seconds from load.',
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SfCountdownTimer(targetDate: _liveTarget),
+              SizedBox(height: AppSpacing.spacing3),
+              Text(
+                'Target: ${_liveTarget.toLocal()}',
+                style: AppTypeScaleToken.textSm.style(
+                  AppTypeWeight.regular,
+                  color: AppColors.neutral600,
+                ),
+              ),
+            ],
           ),
         ),
       ],

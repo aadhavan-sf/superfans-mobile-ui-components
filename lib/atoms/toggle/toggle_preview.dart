@@ -42,11 +42,6 @@ class _TogglePlaygroundPageState extends State<TogglePlaygroundPage> {
     return AtomPlaygroundScaffold(
       title: 'Toggle',
       subtitle: '${widget.size.label} / ${widget.state.label}',
-      specs: [
-        'State: ${widget.state.label}',
-        'Size: ${widget.size.label}',
-        'Pressed: $_value',
-      ],
       child: SfToggle(
         value: _value,
         onChanged: widget.state.isDisabled

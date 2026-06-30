@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../foundation/app_colors.dart';
 import '../foundation/app_spacing.dart';
 import '../foundation/type_scale_preview.dart';
-import '../preview/preview_specs.dart';
-import '../preview/preview_zoom.dart';
 
 class AtomPlaygroundScaffold extends StatelessWidget {
   const AtomPlaygroundScaffold({
@@ -12,13 +10,11 @@ class AtomPlaygroundScaffold extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.child,
-    this.specs = const [],
   });
 
   final String title;
   final String subtitle;
   final Widget child;
-  final List<String> specs;
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +41,8 @@ class AtomPlaygroundScaffold extends StatelessWidget {
                     color: AppColors.neutral600,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.spacing4),
-                const PreviewHelpBanner(),
-                if (specs.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.spacing4),
-                  PreviewSpecPanel(items: specs),
-                ],
                 const SizedBox(height: AppSpacing.spacing10),
-                PreviewZoomSurface(child: child),
+                Align(alignment: Alignment.center, child: child),
               ],
             ),
           ),
@@ -96,8 +86,6 @@ class AtomVariantsScaffold extends StatelessWidget {
                     color: AppColors.neutral600,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.spacing4),
-                const PreviewHelpBanner(),
                 const SizedBox(height: AppSpacing.spacing6),
                 ...sections,
               ],

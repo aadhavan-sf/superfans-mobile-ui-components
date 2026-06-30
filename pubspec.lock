@@ -97,7 +97,7 @@ packages:
     source: sdk
     version: "0.0.0"
   inspector:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: inspector
       sha256: "60782d94c8851b0eee3ffdfea9fd43e7c37f919b54cb587e4de9da0e09d491b5"

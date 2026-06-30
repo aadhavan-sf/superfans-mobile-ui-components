@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   widgetbook: ^3.23.0
+  inspector: ^4.0.0
   device_frame_plus: ^1.5.0
   phosphoricons_flutter: ^1.0.0
 
@@ -22,6 +23,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/superfans-logo-white.png
+    - assets/images/superfans-mark.png
   fonts:
     - family: Figtree
       fonts:

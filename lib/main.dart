@@ -8,15 +8,17 @@ import 'atoms/sf_atom.dart';
 import 'atoms/toggle/toggle_preview.dart';
 import 'foundation/color_palette_preview.dart';
 import 'foundation/shadow_scale_preview.dart';
-import 'foundation/spacing_scale_preview.dart';
+import 'foundation/size_scale_preview.dart';
 import 'foundation/type_scale_preview.dart';
 import 'molecules/button/button_preview.dart';
 import 'molecules/button/button_source_code.dart';
 import 'molecules/button/button_source_code_knob.dart';
 import 'molecules/button/sf_button.dart';
+import 'molecules/cart_counter/cart_counter_preview.dart';
 import 'molecules/countdown_timer/countdown_timer_preview.dart';
-import 'molecules/counter/counter_preview.dart';
-import 'molecules/counter/sf_counter.dart';
+import 'molecules/toolbar/sf_toolbar.dart';
+import 'molecules/toolbar/toolbar_preview.dart';
+import 'preview/conditional_inspector_addon.dart';
 
 void main() {
   runApp(const ComponentWorkbench());
@@ -29,7 +31,7 @@ class ComponentWorkbench extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        InspectorAddon(),
+        ConditionalInspectorAddon(),
       ],
       directories: [
         WidgetbookCategory(
@@ -233,39 +235,42 @@ class ComponentWorkbench extends StatelessWidget {
                   builder: (context) {
                     final days = context.knobs.int.slider(
                       label: 'Days',
-                      initialValue: 2,
+                      initialValue: 0,
                       min: 0,
-                      max: 30,
+                      max: 99,
                     );
                     final hours = context.knobs.int.slider(
                       label: 'Hours',
-                      initialValue: 10,
+                      initialValue: 0,
                       min: 0,
                       max: 23,
                     );
                     final minutes = context.knobs.int.slider(
                       label: 'Minutes',
-                      initialValue: 45,
+                      initialValue: 1,
                       min: 0,
                       max: 59,
                     );
                     final seconds = context.knobs.int.slider(
                       label: 'Seconds',
-                      initialValue: 5,
+                      initialValue: 30,
                       min: 0,
                       max: 59,
                     );
-                    final showDays = context.knobs.boolean(
-                      label: 'Show days',
+                    final running = context.knobs.boolean(
+                      label: 'Running',
                       initialValue: true,
                     );
 
                     return CountdownTimerPlaygroundPage(
+                      key: ValueKey(
+                        'days-$days-hours-$hours-min-$minutes-sec-$seconds-running-$running',
+                      ),
                       days: days,
                       hours: hours,
                       minutes: minutes,
                       seconds: seconds,
-                      showDays: showDays,
+                      running: running,
                     );
                   },
                 ),
@@ -276,49 +281,113 @@ class ComponentWorkbench extends StatelessWidget {
               ],
             ),
             WidgetbookComponent(
-              name: 'Counter',
+              name: 'Toolbar',
               useCases: [
                 WidgetbookUseCase(
                   name: 'Playground',
                   builder: (context) {
-                    final min = context.knobs.int.slider(
-                      label: 'Min',
-                      initialValue: 0,
-                      min: 0,
-                      max: 10,
+                    final variant = context.knobs.object.dropdown(
+                      label: 'Variant',
+                      options: SfToolbarVariant.values,
+                      initialOption: SfToolbarVariant.homepage1,
+                      labelBuilder: (value) => value.label,
                     );
-                    final max = context.knobs.int.slider(
-                      label: 'Max',
+                    final leftAction = context.knobs.object.dropdown(
+                      label: 'Left action',
+                      options: SfToolbarLeftActionKnob.values,
+                      initialOption: SfToolbarLeftActionKnob.fromVariant,
+                      labelBuilder: (value) => value.label,
+                    );
+                    final centerContent = context.knobs.object.dropdown(
+                      label: 'Center content',
+                      options: SfToolbarCenterContentKnob.values,
+                      initialOption: SfToolbarCenterContentKnob.fromVariant,
+                      labelBuilder: (value) => value.label,
+                    );
+                    final centerLabel = context.knobs.string(
+                      label: 'Center label',
+                      initialValue: 'LABEL',
+                    );
+                    final rightIconSlot1 = context.knobs.object.dropdown(
+                      label: 'Right icon slot 1',
+                      options: sfToolbarRightIconSlotOptions,
+                      initialOption: SfToolbarRightAction.search,
+                      labelBuilder: (value) => value.label,
+                    );
+                    final rightIconSlot2 = context.knobs.object.dropdown(
+                      label: 'Right icon slot 2',
+                      options: sfToolbarRightIconSlotOptions,
+                      initialOption: SfToolbarRightAction.cartBadge,
+                      labelBuilder: (value) => value.label,
+                    );
+                    final badgeCount = context.knobs.int.slider(
+                      label: 'Badge count',
                       initialValue: 10,
-                      min: 1,
-                      max: 99,
-                    );
-                    final value = context.knobs.int.slider(
-                      label: 'Value',
-                      initialValue: 2,
                       min: 0,
                       max: 99,
                     );
-                    final state = context.knobs.object.dropdown(
-                      label: 'State',
-                      options: SfCounterState.values,
-                      initialOption: SfCounterState.enabled,
-                      labelBuilder: (state) => state.label,
-                    );
 
-                    final clampedMax = max < min + 1 ? min + 1 : max;
-
-                    return CounterPlaygroundPage(
-                      initialValue: value.clamp(min, clampedMax),
-                      min: min,
-                      max: clampedMax,
-                      state: state,
+                    return ToolbarPlaygroundPage(
+                      key: ValueKey(
+                        'variant-$variant-left-$leftAction-center-$centerContent-label-$centerLabel-slot1-$rightIconSlot1-slot2-$rightIconSlot2-badge-$badgeCount',
+                      ),
+                      variant: variant,
+                      leftAction: leftAction,
+                      centerContent: centerContent,
+                      centerLabel: centerLabel,
+                      rightIconSlot1: rightIconSlot1,
+                      rightIconSlot2: rightIconSlot2,
+                      badgeCount: badgeCount,
                     );
                   },
                 ),
                 WidgetbookUseCase(
                   name: 'Variants',
-                  builder: (context) => const CounterVariantsPage(),
+                  builder: (context) => const ToolbarVariantsPage(),
+                ),
+              ],
+            ),
+            WidgetbookComponent(
+              name: 'Cart counter',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Playground',
+                  builder: (context) {
+                    final count = context.knobs.int.slider(
+                      label: 'Count',
+                      initialValue: 2,
+                      min: 0,
+                      max: 99,
+                    );
+                    final maxCount = context.knobs.int.slider(
+                      label: 'Max count',
+                      initialValue: 10,
+                      min: 1,
+                      max: 99,
+                    );
+                    final loading = context.knobs.boolean(
+                      label: 'Loading',
+                      initialValue: false,
+                    );
+                    final disabled = context.knobs.boolean(
+                      label: 'Disabled',
+                      initialValue: false,
+                    );
+
+                    return CartCounterPlaygroundPage(
+                      key: ValueKey(
+                        'count-$count-max-$maxCount-loading-$loading-disabled-$disabled',
+                      ),
+                      initialCount: count,
+                      maxCount: maxCount,
+                      loading: loading,
+                      disabled: disabled,
+                    );
+                  },
+                ),
+                WidgetbookUseCase(
+                  name: 'Variants',
+                  builder: (context) => const CartCounterVariantsPage(),
                 ),
               ],
             ),
@@ -356,11 +425,11 @@ class ComponentWorkbench extends StatelessWidget {
               ],
             ),
             WidgetbookComponent(
-              name: 'Spacing',
+              name: 'Size scale',
               useCases: [
                 WidgetbookUseCase(
-                  name: 'Scale',
-                  builder: (context) => const SpacingScalePage(),
+                  name: 'Size scale',
+                  builder: (context) => const SizeScalePage(),
                 ),
               ],
             ),

@@ -43,11 +43,6 @@ class _RadioButtonPlaygroundPageState extends State<RadioButtonPlaygroundPage> {
     return AtomPlaygroundScaffold(
       title: 'Radio button',
       subtitle: '${widget.size.label} / ${widget.state.label}',
-      specs: [
-        'State: ${widget.state.label}',
-        'Size: ${widget.size.label}',
-        'Selected: $_value',
-      ],
       child: SfRadioButton(
         value: _value,
         onChanged: widget.state.isDisabled
